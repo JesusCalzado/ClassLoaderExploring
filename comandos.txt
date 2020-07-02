@@ -1,0 +1,31 @@
+#Crea el proyecto(subir un directorio antes de ejecutar)
+mvn archetype:generate -DgroupId=com.calzado -DartifactId=ClassLoaderExploring -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+#Ejecutar la aplicación con la launcher de la JVM
+java -cp "./target/classes;D:/JesusWorld-Disco/JesusDeveloper/RepositorioLocalParaMaven/log4j/log4j/1.2.17/*" com.calzado.util.Example
+
+#Ejecutar la aplicación con el plugin de maven
+mvn exec:java
+
+#Ejecutar la aplicación con el plugin de maven guardando el stdout y stderr a un sólo archivo
+mvn exec:java > trace.log 2>&1
+
+#Ejecutar la aplicación activando el class loader y el stdout y stderr a un sólo archivo
+MAVEN_OPTS="-verbose" mvn exec:java > trace.log 2>&1
+
+#Comando para descubrir parámetros del plugin
+mvn exec:help -Ddetail=true -Dgoal=java
+mvn help:describe -Dplugin=exec -Dgoal=java -Ddetail(este tiene la phase a la cual puede estar ligada)
+
+#Generar un heap dump in 32 bits
+jmap -dump:format=b,file=heapdump_classloader PID
+
+#Generar un thread dump
+jstack PID
+
+#Comandos para análisis
+mvn help:describe -Dcmd=deploy(Lista todas las fases del ciclo de vida default del tipo de package donde nos encontremos(jar,war,ear)
+mvn dependency:build-classpath
+mvn help:effective-pom
+mvn help:system
+mvn dependency:analyze
